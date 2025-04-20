@@ -82,6 +82,14 @@
     let bombCount = parseInt(bombCountSlider.value);
     let bombPositions = new Set();
     let revealed = new Set();
+    let cheatMode = false;
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        cheatMode = !cheatMode;
+        createBoard();
+      }
+    });
  
     function createBoard() {
       board.innerHTML = '';
@@ -119,6 +127,10 @@
             }
           }
         });
+        if (cheatMode && bombPositions.has(i)) {
+          tile.textContent = '💣';
+          tile.style.opacity = '0.4';
+        }
         board.appendChild(tile);
       }
     }
